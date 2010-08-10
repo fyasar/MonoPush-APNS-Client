@@ -20,8 +20,8 @@
 // http://github.com/fyasar/MonoPush-APNS-Client
 /******************************************************************************/
 
-
 #import <UIKit/UIKit.h>
+
 #import "DiscountCouponController.h"
 #import "MovieController.h"
 
@@ -37,9 +37,12 @@
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet MonoPush_APNSViewController *defaultViewController;
+@property (nonatomic, retain) UINavigationController *navigationController;
+
+//Utility controllers
+//These controllers will be open when the arguments received via push notification
 @property (nonatomic, retain) DiscountCouponController *discountCouponController; 
 @property (nonatomic, retain) MovieController *movieController;
-@property (nonatomic, retain) UINavigationController *navigationController;
 
 - (void)OpenMovie;
 - (void)OpenDiscountCoupon;

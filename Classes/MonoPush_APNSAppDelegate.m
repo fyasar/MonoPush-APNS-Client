@@ -21,7 +21,7 @@
 /******************************************************************************/
 
 
-
+//Add MonoPush main library refference
 #import "MPNotification.h"
 
 #import "MonoPush_APNSAppDelegate.h"
@@ -30,8 +30,10 @@
 #import "DiscountCouponController.h"
 #import "MovieController.h"
 
-#define ApplicationKey @"f73c85b2-bf63-4278-9f13-9d8e00bfc9b9"
-#define ApplicationSecret @"42acdd7b-49f7-4230-86a8-5eb6b49a9523"
+//Your Application key and application secret  
+#define kApplicationKey @"f73c85b2-bf63-4278-9f13-9d8e00bfc9b9"
+#define kApplicationSecret @"42acdd7b-49f7-4230-86a8-5eb6b49a9523"
+
 
 @implementation MonoPush_APNSAppDelegate
 
@@ -55,7 +57,7 @@
 	[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackTranslucent];
 }
 
-
+// When the application launch completed app delegate will be fire this event
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
 	
 	//hide statusbar for main page 
@@ -67,58 +69,60 @@
 	
     [window makeKeyAndVisible];
 	
-	//NSLog(@"%@", ((MonoPush_APNSViewController *)[navigationController topViewController]).deviceToken);
-	//Initialize MonoPush Notification wrapper
-	[MPNotification Init:ApplicationKey appSecret:ApplicationSecret];
+	//** MonoPush MainLibrary: Initialize MonoPush's Notification wrapper
+	[MPNotification Init:kApplicationKey appSecret:kApplicationSecret];
 	
-	//Register for notifications
-	[[UIApplication sharedApplication]
-	 registerForRemoteNotificationTypes:(UIRemoteNotificationTypeBadge |
-										 UIRemoteNotificationTypeSound |
-										 UIRemoteNotificationTypeAlert)];
+	//Register this application for notifications
+	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(
+									   UIRemoteNotificationTypeBadge |
+									   UIRemoteNotificationTypeSound | 
+									   UIRemoteNotificationTypeAlert)];
 }
 
-
+// When the remote notification completed app delegate will be fire this event
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
 	
+	//check remote notification enable or not 
 	if ([application enabledRemoteNotificationTypes] == 0) {
 		NSLog(@"Notifications are disabled for this application.");
 		return;
 	}
 	
-	//Register device to MonoPush server
+	//** MonoPush MainLibrary: Register device to MonoPush server
 	[[MPNotification shared] RegisterDeviceWithToken:_deviceToken];
 	
 
 	NSString *token = [[MPNotification shared] _deviceToken];
 	NSString *tokenInfo = [NSString stringWithFormat:@"Received device token : %@", token];
-	//Update View with the current token
+	NSLog(@"%@", tokenInfo);
 
+	//Update UI View with the current token
 	[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:tokenInfo]; 
 		
 	//NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //self.deviceAlias = [userDefaults stringForKey: @"_UADeviceAliasKey"];		
-	
+    //self.deviceAlias = [userDefaults stringForKey: @"_UADeviceAliasKey"];			
 }
 
 
-
+// When the remote notification failed app delegate will be fire this event
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
 	NSLog(@"error ocurred during registering remote notifications : %@", error);
 	
 	NSString *errorTitle = @"Error Ocurred";
-	NSString *errorMessage = @"Ops, error ocurred during registering remote notifications"
-	"Please check the http://www.monopush.com/support support site for solve this problem";
+	NSString *errorMessage = @"Ooops, error ocurred during registering remote notifications"
+	"Please visit http://www.monopush.com/support site for solve this problem";
 	
 	UIAlertView *notificationRegistrationError = [[UIAlertView alloc] initWithTitle:errorTitle
-																			message:errorMessage
-																		   delegate:nil
-																  cancelButtonTitle:@"OK"
-																  otherButtonTitles:nil];
+													message:errorMessage
+													delegate:nil
+													cancelButtonTitle:@"OK"
+													otherButtonTitles:nil
+												  ];
 	
 	[notificationRegistrationError show];
 	[notificationRegistrationError release];
 	
+	//update network activity indicator
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
