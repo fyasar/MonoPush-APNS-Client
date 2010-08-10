@@ -229,6 +229,8 @@
 			<key>Layout</key>
 			<array>
 				<dict>
+					<key>BecomeActive</key>
+					<true/>
 					<key>ContentConfiguration</key>
 					<dict>
 						<key>PBXBottomSmartGroupGIDs</key>
@@ -265,6 +267,7 @@
 							<array>
 								<string>29B97314FDCFA39411CA2CEA</string>
 								<string>080E96DDFE201D6D7F000001</string>
+								<string>3D2AA09811CACFAB00B65211</string>
 								<string>29B97315FDCFA39411CA2CEA</string>
 								<string>29B97317FDCFA39411CA2CEA</string>
 								<string>1C37FBAC04509CD000000102</string>
@@ -275,6 +278,7 @@
 							<array>
 								<array>
 									<integer>4</integer>
+									<integer>2</integer>
 									<integer>1</integer>
 									<integer>0</integer>
 								</array>
@@ -299,7 +303,7 @@
 							<real>238</real>
 						</array>
 						<key>RubberWindowFrame</key>
-						<string>240 93 1280 651 0 0 1280 778 </string>
+						<string>0 123 1280 651 0 0 1280 778 </string>
 					</dict>
 					<key>Module</key>
 					<string>PBXSmartGroupTreeModule</string>
@@ -310,14 +314,12 @@
 					<key>Dock</key>
 					<array>
 						<dict>
-							<key>BecomeActive</key>
-							<true/>
 							<key>ContentConfiguration</key>
 							<dict>
 								<key>PBXProjectModuleGUID</key>
 								<string>1CE0B20306471E060097A5F4</string>
 								<key>PBXProjectModuleLabel</key>
-								<string>MonoPush_APNSAppDelegate.m</string>
+								<string>MPNotification.h</string>
 								<key>PBXSplitModuleInNavigatorKey</key>
 								<dict>
 									<key>Split0</key>
@@ -325,11 +327,11 @@
 										<key>PBXProjectModuleGUID</key>
 										<string>1CE0B20406471E060097A5F4</string>
 										<key>PBXProjectModuleLabel</key>
-										<string>MonoPush_APNSAppDelegate.m</string>
+										<string>MPNotification.h</string>
 										<key>_historyCapacity</key>
 										<integer>0</integer>
 										<key>bookmark</key>
-										<string>3D8412331210C89D00FB6820</string>
+										<string>3D6045C4121202D1001FE3F9</string>
 										<key>history</key>
 										<array>
 											<string>3DA963F511BA8AAA00610EB8</string>
@@ -343,21 +345,21 @@
 											<string>3D94A3D511C455AA0003FC11</string>
 											<string>3D94A3D611C455AA0003FC11</string>
 											<string>3D94A3D711C455AA0003FC11</string>
-											<string>3D81B5F411C6D9EB004D787D</string>
-											<string>3D81B5F611C6D9EB004D787D</string>
-											<string>3D81B5F711C6D9EB004D787D</string>
 											<string>3D2AA03C11CACA9C00B65211</string>
 											<string>3D2AA09411CACE8200B65211</string>
 											<string>3D2AA09511CACE8200B65211</string>
 											<string>3D80C56011CCF83500F8EA0D</string>
-											<string>3D80C56211CCF83500F8EA0D</string>
-											<string>3DABCEB911D78D1A006348E6</string>
-											<string>3DABCEBA11D78D1A006348E6</string>
-											<string>3DABCEDB11D78EDF006348E6</string>
-											<string>3DABCEDC11D78EDF006348E6</string>
 											<string>3D7C682D11D7A47A001DADAE</string>
-											<string>3D8412311210C89D00FB6820</string>
-											<string>3D8412321210C89D00FB6820</string>
+											<string>3D6045BA121202D1001FE3F9</string>
+											<string>3D6045BB121202D1001FE3F9</string>
+											<string>3D6045BC121202D1001FE3F9</string>
+											<string>3D6045BD121202D1001FE3F9</string>
+											<string>3D6045BE121202D1001FE3F9</string>
+											<string>3D6045BF121202D1001FE3F9</string>
+											<string>3D6045C0121202D1001FE3F9</string>
+											<string>3D6045C1121202D1001FE3F9</string>
+											<string>3D6045C2121202D1001FE3F9</string>
+											<string>3D6045C3121202D1001FE3F9</string>
 										</array>
 									</dict>
 									<key>SplitCount</key>
@@ -369,14 +371,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 0}, {1020, 543}}</string>
+								<string>{{0, 0}, {1020, 541}}</string>
 								<key>RubberWindowFrame</key>
-								<string>240 93 1280 651 0 0 1280 778 </string>
+								<string>0 123 1280 651 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>PBXNavigatorGroup</string>
 							<key>Proportion</key>
-							<string>543pt</string>
+							<string>541pt</string>
 						</dict>
 						<dict>
 							<key>ContentConfiguration</key>
@@ -389,14 +391,14 @@
 							<key>GeometryConfiguration</key>
 							<dict>
 								<key>Frame</key>
-								<string>{{0, 548}, {1020, 62}}</string>
+								<string>{{0, 546}, {1020, 64}}</string>
 								<key>RubberWindowFrame</key>
-								<string>240 93 1280 651 0 0 1280 778 </string>
+								<string>0 123 1280 651 0 0 1280 778 </string>
 							</dict>
 							<key>Module</key>
 							<string>XCDetailModule</string>
 							<key>Proportion</key>
-							<string>62pt</string>
+							<string>64pt</string>
 						</dict>
 					</array>
 					<key>Proportion</key>
@@ -415,9 +417,9 @@
 			</array>
 			<key>TableOfContents</key>
 			<array>
-				<string>3D8412341210C89D00FB6820</string>
+				<string>3D6045B712120145001FE3F9</string>
 				<string>1CE0B1FE06471DED0097A5F4</string>
-				<string>3D8412351210C89D00FB6820</string>
+				<string>3D6045B812120145001FE3F9</string>
 				<string>1CE0B20306471E060097A5F4</string>
 				<string>1CE0B20506471E060097A5F4</string>
 			</array>
@@ -555,12 +557,11 @@
 	<integer>5</integer>
 	<key>WindowOrderList</key>
 	<array>
-		<string>1CD10A99069EF8BA00B06720</string>
 		<string>3D8794C511BA7694003B9449</string>
-		<string>/Users/fatih/Documents/MonoPush APNS/MonoPush APNS.xcodeproj</string>
+		<string>/Users/fatih/Documents/MonoPush-APNS-Client/MonoPush APNS.xcodeproj</string>
 	</array>
 	<key>WindowString</key>
-	<string>240 93 1280 651 0 0 1280 778 </string>
+	<string>0 123 1280 651 0 0 1280 778 </string>
 	<key>WindowToolsV3</key>
 	<array>
 		<dict>
@@ -637,7 +638,7 @@
 			<key>TableOfContents</key>
 			<array>
 				<string>3D8794C511BA7694003B9449</string>
-				<string>3D8412361210C89D00FB6820</string>
+				<string>3D6045B912120145001FE3F9</string>
 				<string>1CD0528F0623707200166675</string>
 				<string>XCMainBuildResultsModuleGUID</string>
 			</array>
