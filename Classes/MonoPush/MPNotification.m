@@ -35,14 +35,25 @@ static MPNotification *_mpNotificationInstance;
 @synthesize _appSecret;
 @synthesize _deviceToken;
 @synthesize _deviceAlias;
+@synthesize _lastError;
+
+@synthesize isDeviceTokenReceived;
+@synthesize isDeviceTokenRegistered;
 
 - (void)dealloc {
 	[_appKey release];
 	[_appSecret release];
 	[_deviceToken release];
 	[_deviceAlias release];
+	[_lastError release];
     [super dealloc];
 }
+
++(void)dispose {
+    [_mpNotificationInstance release];
+    _mpNotificationInstance = nil;
+}
+
 
 - (id)initWithId:(NSString *)appkey appSecret:(NSString *)secret {
     if (self = [super init]) {
@@ -50,12 +61,17 @@ static MPNotification *_mpNotificationInstance;
         self._appSecret = secret;
         self._deviceToken = nil;
         self._deviceAlias = nil;
+		self._lastError = nil;
+		self.isDeviceTokenReceived = NO;
+		self.isDeviceTokenRegistered = NO;
     }
     return self;
 }
 
 + (void)Init:(NSString *)appkey appSecret:(NSString *)appSecret
 {
+	[self EnsureRunningInDevice];
+	
 	@synchronized(self)
 	{
 		if (!_mpNotificationInstance) {
@@ -64,7 +80,22 @@ static MPNotification *_mpNotificationInstance;
 	}	
 }
 
+//is device running into simulator ?
++ (void)EnsureRunningInDevice
+{
+		if ([[[UIDevice currentDevice] model] compare:@"iPhone Simulator"] == NSOrderedSame) {
+			UIAlertView *someError = [[UIAlertView alloc] initWithTitle:@"Warning"
+																message:@"Application running in simulator, you cannot receive any notification on this mode"
+															   delegate:self
+													  cancelButtonTitle:@"OK"
+													  otherButtonTitles:nil];
+			
+			[someError show];
+			[someError release];
+		}
+}
 
+// Register current device to MonoPush via API  
 - (void)RegisterDeviceWithToken:(NSData *)deviceToken
 {
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
@@ -80,6 +111,8 @@ static MPNotification *_mpNotificationInstance;
 	 NSArray* languages = [defs objectForKey:@"AppleLanguages"];
 	 NSString* preferredLang = [languages objectAtIndex:0];
 	 
+	 //these information should provide to MonoPush 
+	 //Otherwise, you cannot see many reports correctly
 	 UIDevice *dev = [UIDevice currentDevice];
 	 NSString *deviceUuid = dev.uniqueIdentifier;
 	 NSString *deviceName = dev.name;
@@ -89,7 +122,6 @@ static MPNotification *_mpNotificationInstance;
 	
 	//Build register device json payload
 	NSMutableDictionary* jsonObject = [NSMutableDictionary dictionary];
-	[jsonObject setObject:self._deviceToken forKey:@"token"];
 	[jsonObject setObject:deviceUuid forKey:@"udid"];
 	[jsonObject setObject:preferredLang forKey:@"preferedlanguage"];
 	[jsonObject setObject:deviceName forKey:@"devicename"];
@@ -100,42 +132,62 @@ static MPNotification *_mpNotificationInstance;
 	NSString *jsonPayloadString = [jsonObject JSONRepresentation];
 	NSLog(@"json payload : %@", jsonPayloadString );
 	
-	NSURL *url = [NSURL URLWithString:@"http://app.monopush.com/api/device/register"];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.monopush.com/api/device/register/%@", self._deviceToken]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	
 	
 	[request setUsername:_mpNotificationInstance._appKey];
 	[request setPassword:_mpNotificationInstance._appSecret];
 	[request setRequestMethod:@"PUT"];
-	
 	[request addRequestHeader: @"Content-Type" value: @"application/json"];
 	[request appendPostData:[jsonPayloadString
 							 dataUsingEncoding:NSUTF8StringEncoding]];
 	
+	request.timeOutSeconds = 60;
 	[request setDelegate:self];
 	[request startAsynchronous];
 		
 }
 
+- (void)failedReceiveNotification:(NSError*)error
+{
+	self.isDeviceTokenReceived = NO;
+}
+
 
 - (void)requestFinished:(ASIHTTPRequest *)request
 {
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;	
 	
-	// Use when fetching text data
-	//NSString *responseString = [request responseString];	
-	// Use when fetching binary data
-	//NSData *responseData = [request responseData];
+	
+	//grap responsed data
+	int statusCode = [request responseStatusCode];
+	NSString *statusText = [request responseString];	
+	
+	if(statusCode != 200 && statusCode != 201) {
+        NSLog(@"Error registering device token, statusCode :%d, statusText :%@", statusCode, statusText);
+		self._lastError = statusText;
+    }else {
+		self.isDeviceTokenRegistered = YES;
+        NSLog(@"Device token registered, statusCode :%d, statusText :%@", statusCode, statusText);
+	}
 }
 
 - (void)requestFailed:(ASIHTTPRequest *)request
-{
-	//NSError *error = [request error];
+{	
+	//grap responsed data
+	int statusCode = [request responseStatusCode];
+	NSString *statusText = [request responseString];	
+	
+	NSError *error = [request error];
+	NSLog(@"Http request error : %@", error);
+	NSLog(@"Error registering device token, statusCode :%d, statusText :%@", statusCode, statusText);
+	self._lastError = statusText;
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
 
 
-+(MPNotification *)shared
++ (MPNotification *)shared
 {
     if (_mpNotificationInstance == nil) {
         [NSException raise:@"InstanceNotExists" format:@"Attempted to access instance before initializaion."];

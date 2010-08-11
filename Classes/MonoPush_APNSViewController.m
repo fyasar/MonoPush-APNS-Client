@@ -22,121 +22,116 @@
 
 
 #import "MonoPush_APNSViewController.h"
-#import "ASIFormDataRequest.h"
-
-#define kApplicationKey @"f73c85b2-bf63-4278-9f13-9d8e00bfc9b9"
-#define kApplicationSecret @"42acdd7b-49f7-4230-86a8-5eb6b49a9523"
+#import "MPNotification.h"
 
 @implementation MonoPush_APNSViewController
 @synthesize infoDisplay, backgroundImageView, deviceToken;
+@synthesize defaultInformation, soundInformation;
+@synthesize deviceTokenRecievedLabel;
+@synthesize deviceTokenRegisteredLabel;
+
 
 - (void)viewDidLoad {
 		[[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
-	[self setStatus];
+		
+	self.defaultInformation = [NSString stringWithString:@"Welcome to MonoPush client example." 
+							   "\nThis example app developed for that how to connect to MonoPush API via http request." 
+							   "\nAs you can see the above icons shows you your app connection status."];
+	
+	self.soundInformation = [NSString stringWithString:@"You can customize sounds easyly." 
+													   "\nWe included sample sound files into this app bundle, just add sound=\"sound.wav\" into your push request.\n" 
+													   "- Incoming.wav\n"
+													   "- yoda.wav\n"
+													   "- dolfijn.wav\n"
+													   "- kikker.wav\n"
+													   "- tarzan.wav\n"
+													   "- r2d2.wav"];
+		
+	[self setStatus:0];
 	[self setTitle:@"MonoPush APNS"];
     [super viewDidLoad];
 }
 
--(void)sendTest
-{
-	/*
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+- (void)mailComposeController:(MFMailComposeViewController *)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error {
+	[self dismissModalViewControllerAnimated:YES];
+}
 
-	NSOperationQueue *queue = [[[NSOperationQueue alloc] init] autorelease];
-	NSString *UAServer = @"http://app.monopush.com/api/device/register";
-	//NSString *urlString = [NSString stringWithFormat:@"%@%@%@/", UAServer, @"/api/device_tokens/", self.deviceToken];
-	NSURL *url = [NSURL URLWithString:  UAServer];
-	ASIHTTPRequest *request = [[[ASIHTTPRequest alloc] initWithURL:url] autorelease];
-	request.requestMethod = @"POST";
-	
-	// Send along our device alias as the JSON encoded request body
-	//if(self.deviceAlias != nil && [self.deviceAlias length] > 0) {
-	[request addRequestHeader: @"Content-Type" value: @"application/json"];
-	[request appendPostData:[[NSString stringWithFormat: @"{\"tokens\": [\"%@\"]}", [userDefaults valueForKey:@"_UALastDeviceToken"]]
-							 dataUsingEncoding:NSUTF8StringEncoding]];
-	//}
-	
-	[request addRequestHeader:@"ApplicationKey" value:@"cf1c291a-36c8-4411-81d1-9d8d012c1ee6"];
-	[request addRequestHeader:@"ApplicationSecret" value:@"aad41e50-61e4-4db0-8282-cf351927340e"];
-	
-	// Authenticate to the server
-	request.username = kApplicationKey;
-	request.password = kApplicationSecret;
-	
-	[request setDelegate:self];
-	[request setDidFinishSelector: @selector(successMethod:)];
-	[request setDidFailSelector: @selector(requestWentWrong:)];
-	[queue addOperation:request];
-	 */
+- (void)dealloc {
+	[backgroundImageView release];
+	[deviceToken release];
+	[infoDisplay release];
+	[defaultInformation release];
+    [soundInformation release];
+    [deviceTokenRecievedLabel release];
+    [deviceTokenRegisteredLabel release];
+	[super dealloc];
 }
 
 
-
-- (void)setStatus {
-	/*
-	NSString *model = [[UIDevice currentDevice] model];
-	if ([[[NSBundle mainBundle] bundleIdentifier] compare: @"com.urbanairship.pushtest"] == NSOrderedSame) {
-		NSString *identifier = [[NSBundle mainBundle] bundleIdentifier];
-		NSLog(identifier);
-		
-		[infoDisplay setText: @"ERROR: Invalid bundle identifier."
-		 " Please change your bundle identifier in APNS-info.plist to the one you specified in the "
-		 "Apple iPhone Developer Portal.\n\nIt should be something like: "
-		 "com.example.yourapp"];
-	} else if ([model compare: @"iPhone Simulator"] == NSOrderedSame) {
-		[infoDisplay setText: @"ERROR: Remote notifications are not supported in the simulator."];
+- (void)setStatus:(int)statusMode {
+	if(statusMode == 0) //defaul info
+		infoDisplay.text = self.defaultInformation;
+	else { //sound info
+		infoDisplay.text = self.soundInformation;
 	}
-	self._info = [infoDisplay text];
-*/
+}
+
+- (void)updateStatusIcons
+{
+	if([MPNotification shared].isDeviceTokenReceived)
+	{
+		deviceTokenRecievedLabel.text = @"OK";
+		if([MPNotification shared].isDeviceTokenRegistered)
+		{
+			deviceTokenRegisteredLabel.text = @"OK";
+		}else {
+			deviceTokenRegisteredLabel.text = @"ERR";
+		}		
+	}else {
+		deviceTokenRecievedLabel.text = @"ERR";
+		deviceTokenRegisteredLabel.text = @"ERR";
+	}
+}
+
+- (void)showSoundInformation
+{
+	[self setStatus:1];	
+}
+
+- (void)sendMeEmail
+{
+	if([MPNotification shared].isDeviceTokenReceived)
+	{
+		UIAlertView *notificationAlert = [[UIAlertView alloc] 
+										  initWithTitle:@"Warning" 
+										  message:@"Your device didn't get device token yet" 
+										  delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+		[notificationAlert show];
+		[notificationAlert release];
+		return;		
+	}
+	
+	MFMailComposeViewController *picker = [[MFMailComposeViewController alloc] init];
+	picker.mailComposeDelegate = self;
+	
+	[picker setSubject:@"About your device token"];
+		
+	NSString *emailBody = [NSString stringWithFormat:@"Hello,\n"
+						   "Your device token is :%@\n"
+						   "Thank you\n\n"
+						   "MonoPush Example Client", self.deviceToken];
+	
+	[picker setMessageBody:emailBody isHTML:YES];
+	
+	[self presentModalViewController:picker animated:YES];
+	[picker release];
 }
 
 
-- (void)successMethod:(ASIHTTPRequest *) request {
-	//[userDefaults setValue: self.deviceToken forKey: @"_UALastDeviceToken"];
-	//[userDefaults setValue: self.deviceAlias forKey: @"_UALastAlias"];
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	[infoDisplay setText: @"Echo was send to API server."];
+- (void)showInformation {
+	[self setStatus:0];
 }
 
-- (void)requestWentWrong:(ASIHTTPRequest *)request {
-	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
-	NSError *error = [request error];
-	UIAlertView *someError = [[UIAlertView alloc] initWithTitle: 
-							  @"Network error" message: @"Error registering with server"
-													   delegate: self
-											  cancelButtonTitle: @"Ok"
-											  otherButtonTitles: nil];
-	[someError show];
-	[someError release];
-	NSLog(@"ERROR: NSError query result: %@", error);
-}
-
-
-/*
-// The designated initializer. Override to perform setup that is required before the view is loaded.
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
-        // Custom initialization
-    }
-    return self;
-}
-*/
-
-/*
-// Implement loadView to create a view hierarchy programmatically, without using a nib.
-- (void)loadView {
-}
-*/
-
-
-
-/*
-// Override to allow orientations other than the default portrait orientation.
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    // Return YES for supported orientations
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
-}
-*/
 
 - (void)didReceiveMemoryWarning {
 	// Releases the view if it doesn't have a superview.
@@ -151,11 +146,6 @@
 }
 
 
-- (void)dealloc {
-	[backgroundImageView release];
-	[deviceToken release];
-	[infoDisplay release];
-    [super dealloc];
-}
+
 
 @end

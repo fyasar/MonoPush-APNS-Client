@@ -31,8 +31,8 @@
 #import "MovieController.h"
 
 //Your Application key and application secret  
-#define kApplicationKey @"f73c85b2-bf63-4278-9f13-9d8e00bfc9b9"
-#define kApplicationSecret @"42acdd7b-49f7-4230-86a8-5eb6b49a9523"
+#define kApplicationKey @"30d66e16-6d74-4e14-8314-9d9c018677ee"
+#define kApplicationSecret @"b8077179-3630-42f4-b191-edbf82d51d53"
 
 
 @implementation MonoPush_APNSAppDelegate
@@ -42,12 +42,15 @@
 @synthesize navigationController;
 @synthesize discountCouponController;
 @synthesize movieController;
+@synthesize timer;
+@synthesize countdownSeconds;
 
 - (void)dealloc {
 	[navigationController release];
 	[discountCouponController release];
 	[movieController release];
     [defaultViewController release];
+    [timer release];
     [window release];
     [super dealloc];
 }
@@ -59,11 +62,10 @@
 
 // When the application launch completed app delegate will be fire this event
 - (void)applicationDidFinishLaunching:(UIApplication *)application {    
+	self.countdownSeconds = 60;
 	
-	//hide statusbar for main page 
 	[[UIApplication sharedApplication] setStatusBarHidden:NO animated:NO];	
 	
-	//add navcontroller default view to 
 	[window addSubview:navigationController.view];
 	[self.navigationController setNavigationBarHidden:YES];
 	
@@ -79,10 +81,9 @@
 									   UIRemoteNotificationTypeAlert)];
 }
 
-// When the remote notification completed app delegate will be fire this event
 - (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)_deviceToken {
 	
-	//check remote notification enable or not 
+	//check remote notification enabled or not 
 	if ([application enabledRemoteNotificationTypes] == 0) {
 		NSLog(@"Notifications are disabled for this application.");
 		return;
@@ -90,18 +91,45 @@
 	
 	//** MonoPush MainLibrary: Register device to MonoPush server
 	[[MPNotification shared] RegisterDeviceWithToken:_deviceToken];
-	
+	[self startTimer];
 
 	NSString *token = [[MPNotification shared] _deviceToken];
-	NSString *tokenInfo = [NSString stringWithFormat:@"Received device token : %@", token];
+	NSString *tokenInfo = [NSString stringWithFormat:@"%@ device token received from Apple", token];
 	NSLog(@"%@", tokenInfo);
 
 	//Update UI View with the current token
-	[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:tokenInfo]; 
-		
-	//NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    //self.deviceAlias = [userDefaults stringForKey: @"_UADeviceAliasKey"];			
+	[MPNotification shared].isDeviceTokenReceived = YES;
+	[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 
+	[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:tokenInfo];
 }
+
+-(void)startTimer{	
+	timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
+	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+}
+
+-(void)timerTick{		
+	if(countdownSeconds == 0 )
+	{
+		[timer invalidate]; 
+	}
+	else
+	{
+		if(nil != [MPNotification shared]._lastError)
+		{
+			[timer invalidate];
+			[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:[MPNotification shared]._lastError];
+			[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 						
+		}
+		
+		--countdownSeconds;
+		if([MPNotification shared].isDeviceTokenRegistered)
+		{
+			[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 			
+		}
+	}
+}
+
 
 
 // When the remote notification failed app delegate will be fire this event
@@ -122,9 +150,13 @@
 	[notificationRegistrationError show];
 	[notificationRegistrationError release];
 	
+	[[MPNotification shared] failedReceiveNotification:error];
+	[MPNotification shared].isDeviceTokenReceived = NO;
+	[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 
 	//update network activity indicator
 	[UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
 }
+
 
 
 //notification recieving
@@ -172,6 +204,11 @@
 	 */
 	
 
+}
+
+
+- (void)applicationWillTerminate:(UIApplication *)application {
+    [MPNotification dispose];
 }
 
 

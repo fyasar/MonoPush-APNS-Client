@@ -29,17 +29,27 @@
 	NSString *_appSecret;
 	NSString *_deviceToken;
 	NSString *_deviceAlias;
+	NSString *_lastError;
+	BOOL isDeviceTokenReceived;
+	BOOL isDeviceTokenRegistered;
 }
 
 @property (nonatomic, retain) NSString *_appKey;
 @property (nonatomic, retain) NSString *_appSecret;
 @property (nonatomic, retain) NSString *_deviceToken;
 @property (nonatomic, retain) NSString *_deviceAlias;
+@property (nonatomic, retain) NSString *_lastError;
+
+@property (assign) BOOL isDeviceTokenReceived;
+@property (assign) BOOL isDeviceTokenRegistered;
+
 
 - (void)RegisterDeviceWithToken:(NSData *)token;
-
+- (void)failedReceiveNotification:(NSError*)error;
 + (void)Init:(NSString *)appkey appSecret:(NSString *)secret;
 + (MPNotification *)shared;
++ (void)EnsureRunningInDevice;
++ (void)dispose;
 
 @end
 

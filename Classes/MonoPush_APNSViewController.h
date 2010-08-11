@@ -22,20 +22,32 @@
 
 
 #import <UIKit/UIKit.h>
+#import <MessageUI/MessageUI.h>
+#import <MessageUI/MFMailComposeViewController.h>
 
-@interface MonoPush_APNSViewController : UIViewController {
+@interface MonoPush_APNSViewController : UIViewController<MFMailComposeViewControllerDelegate> {
 	NSString *deviceToken;
+	NSString *defaultInformation;
+	NSString *soundInformation;
 	IBOutlet UIImageView *backgroundImageView; 
 	IBOutlet UITextView *infoDisplay;
+	IBOutlet UILabel *deviceTokenRecievedLabel;
+	IBOutlet UILabel *deviceTokenRegisteredLabel;
 }
 
 @property (nonatomic, retain) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, retain) IBOutlet UITextView *infoDisplay;
+@property (nonatomic, retain) IBOutlet UILabel *deviceTokenRecievedLabel;
+@property (nonatomic, retain) IBOutlet UILabel *deviceTokenRegisteredLabel;
 @property (nonatomic, retain) NSString *deviceToken;
+@property (nonatomic, retain) NSString *defaultInformation;
+@property (nonatomic, retain) NSString *soundInformation;
 
-- (void)setStatus;
-- (IBAction)sendTest;
-
+- (void)setStatus:(int)statusMode; 
+- (IBAction)showSoundInformation;
+- (IBAction)showInformation;
+- (IBAction)sendMeEmail;
+- (void)updateStatusIcons;
 
 @end
 

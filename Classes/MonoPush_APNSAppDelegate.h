@@ -33,17 +33,23 @@
 	DiscountCouponController *discountCouponController; 
 	MovieController *movieController; 
 	UINavigationController *navigationController;
+	NSTimer* timer;
+	int countdownSeconds;
 }
 
 @property (nonatomic, retain) IBOutlet UIWindow *window;
 @property (nonatomic, retain) IBOutlet MonoPush_APNSViewController *defaultViewController;
 @property (nonatomic, retain) UINavigationController *navigationController;
+@property (nonatomic, retain) NSTimer *timer;
+@property int countdownSeconds;
 
 //Utility controllers
 //These controllers will be open when the arguments received via push notification
 @property (nonatomic, retain) DiscountCouponController *discountCouponController; 
 @property (nonatomic, retain) MovieController *movieController;
 
+- (void)startTimer;
+- (void)timerTick;
 - (void)OpenMovie;
 - (void)OpenDiscountCoupon;
 @end

@@ -25,10 +25,6 @@
 		3D2AA05811CACAD900B65211 /* info.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04811CACAD900B65211 /* info.png */; };
 		3D2AA05911CACAD900B65211 /* success.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04911CACAD900B65211 /* success.png */; };
 		3D2AA05A11CACAD900B65211 /* video.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04A11CACAD900B65211 /* video.png */; };
-		3D2AA05B11CACAD900B65211 /* cat.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04C11CACAD900B65211 /* cat.caf */; };
-		3D2AA05C11CACAD900B65211 /* cow.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04D11CACAD900B65211 /* cow.caf */; };
-		3D2AA05D11CACAD900B65211 /* frog.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04E11CACAD900B65211 /* frog.caf */; };
-		3D2AA05E11CACAD900B65211 /* pig.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA04F11CACAD900B65211 /* pig.caf */; };
 		3D2AA05F11CACAD900B65211 /* r2d2.caf in Resources */ = {isa = PBXBuildFile; fileRef = 3D2AA05011CACAD900B65211 /* r2d2.caf */; };
 		3D2AA0AD11CACFAB00B65211 /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA09C11CACFAB00B65211 /* ASIAuthenticationDialog.m */; };
 		3D2AA0AE11CACFAB00B65211 /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D2AA09E11CACFAB00B65211 /* ASIFormDataRequest.m */; };
@@ -52,6 +48,13 @@
 		3D80C53611CCE95F00F8EA0D /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3D80C53011CCE95F00F8EA0D /* SBJsonWriter.m */; };
 		3D8794E611BA77DF003B9449 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8794E511BA77DF003B9449 /* CFNetwork.framework */; };
 		3D8794E811BA77DF003B9449 /* libz.1.2.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D8794E711BA77DF003B9449 /* libz.1.2.3.dylib */; };
+		3D889F531213463E0067AD50 /* Incoming.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D889F4E1213463E0067AD50 /* Incoming.wav */; };
+		3D889F541213463E0067AD50 /* yoda.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D889F4F1213463E0067AD50 /* yoda.wav */; };
+		3D889F551213463E0067AD50 /* dolfijn.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D889F501213463E0067AD50 /* dolfijn.wav */; };
+		3D889F561213463E0067AD50 /* kikker.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D889F511213463E0067AD50 /* kikker.wav */; };
+		3D889F571213463E0067AD50 /* tarzan.wav in Resources */ = {isa = PBXBuildFile; fileRef = 3D889F521213463E0067AD50 /* tarzan.wav */; };
+		3D889FC6121354810067AD50 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D889FC5121354810067AD50 /* MessageUI.framework */; };
+		3D889FC9121354D70067AD50 /* mail.png in Resources */ = {isa = PBXBuildFile; fileRef = 3D889FC8121354D70067AD50 /* mail.png */; };
 		3DABCEFF11D78F9C006348E6 /* Entitlements.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3DABCEFE11D78F9C006348E6 /* Entitlements.plist */; };
 		3DB849E811CAC7920021F621 /* resources.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3DB849E611CAC7920021F621 /* resources.strings */; };
 /* End PBXBuildFile section */
@@ -79,10 +82,6 @@
 		3D2AA04811CACAD900B65211 /* info.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = info.png; sourceTree = "<group>"; };
 		3D2AA04911CACAD900B65211 /* success.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = success.png; sourceTree = "<group>"; };
 		3D2AA04A11CACAD900B65211 /* video.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = video.png; sourceTree = "<group>"; };
-		3D2AA04C11CACAD900B65211 /* cat.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cat.caf; sourceTree = "<group>"; };
-		3D2AA04D11CACAD900B65211 /* cow.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = cow.caf; sourceTree = "<group>"; };
-		3D2AA04E11CACAD900B65211 /* frog.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = frog.caf; sourceTree = "<group>"; };
-		3D2AA04F11CACAD900B65211 /* pig.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pig.caf; sourceTree = "<group>"; };
 		3D2AA05011CACAD900B65211 /* r2d2.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = r2d2.caf; sourceTree = "<group>"; };
 		3D2AA09B11CACFAB00B65211 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
 		3D2AA09C11CACFAB00B65211 /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
@@ -126,6 +125,13 @@
 		3D80C53011CCE95F00F8EA0D /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		3D8794E511BA77DF003B9449 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		3D8794E711BA77DF003B9449 /* libz.1.2.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.3.dylib; path = usr/lib/libz.1.2.3.dylib; sourceTree = SDKROOT; };
+		3D889F4E1213463E0067AD50 /* Incoming.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Incoming.wav; sourceTree = "<group>"; };
+		3D889F4F1213463E0067AD50 /* yoda.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = yoda.wav; sourceTree = "<group>"; };
+		3D889F501213463E0067AD50 /* dolfijn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = dolfijn.wav; sourceTree = "<group>"; };
+		3D889F511213463E0067AD50 /* kikker.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = kikker.wav; sourceTree = "<group>"; };
+		3D889F521213463E0067AD50 /* tarzan.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = tarzan.wav; sourceTree = "<group>"; };
+		3D889FC5121354810067AD50 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		3D889FC8121354D70067AD50 /* mail.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mail.png; sourceTree = "<group>"; };
 		3DABCEFE11D78F9C006348E6 /* Entitlements.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Entitlements.plist; sourceTree = "<group>"; };
 		3DB849E711CAC7920021F621 /* en */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; name = en; path = resources.strings; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* MonoPush_APNS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "MonoPush_APNS-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
@@ -143,6 +149,7 @@
 				3D8794E811BA77DF003B9449 /* libz.1.2.3.dylib in Frameworks */,
 				3D74E2B111C2C68300E78F8C /* SystemConfiguration.framework in Frameworks */,
 				3D74E2B311C2C68D00E78F8C /* MobileCoreServices.framework in Frameworks */,
+				3D889FC6121354810067AD50 /* MessageUI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,6 +192,7 @@
 				3D8794E711BA77DF003B9449 /* libz.1.2.3.dylib */,
 				3D74E2B011C2C68300E78F8C /* SystemConfiguration.framework */,
 				3D74E2B211C2C68D00E78F8C /* MobileCoreServices.framework */,
+				3D889FC5121354810067AD50 /* MessageUI.framework */,
 			);
 			name = CustomTemplate;
 			sourceTree = "<group>";
@@ -227,6 +235,7 @@
 		3D2AA04011CACAD900B65211 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				3D889FC8121354D70067AD50 /* mail.png */,
 				3D2AA04111CACAD900B65211 /* app-bg.png */,
 				3D2AA04211CACAD900B65211 /* app-bg2.png */,
 				3D2AA04311CACAD900B65211 /* Application-icon.png */,
@@ -245,10 +254,11 @@
 		3D2AA04B11CACAD900B65211 /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				3D2AA04C11CACAD900B65211 /* cat.caf */,
-				3D2AA04D11CACAD900B65211 /* cow.caf */,
-				3D2AA04E11CACAD900B65211 /* frog.caf */,
-				3D2AA04F11CACAD900B65211 /* pig.caf */,
+				3D889F4E1213463E0067AD50 /* Incoming.wav */,
+				3D889F4F1213463E0067AD50 /* yoda.wav */,
+				3D889F501213463E0067AD50 /* dolfijn.wav */,
+				3D889F511213463E0067AD50 /* kikker.wav */,
+				3D889F521213463E0067AD50 /* tarzan.wav */,
 				3D2AA05011CACAD900B65211 /* r2d2.caf */,
 			);
 			name = Media;
@@ -403,12 +413,14 @@
 				3D2AA05811CACAD900B65211 /* info.png in Resources */,
 				3D2AA05911CACAD900B65211 /* success.png in Resources */,
 				3D2AA05A11CACAD900B65211 /* video.png in Resources */,
-				3D2AA05B11CACAD900B65211 /* cat.caf in Resources */,
-				3D2AA05C11CACAD900B65211 /* cow.caf in Resources */,
-				3D2AA05D11CACAD900B65211 /* frog.caf in Resources */,
-				3D2AA05E11CACAD900B65211 /* pig.caf in Resources */,
 				3D2AA05F11CACAD900B65211 /* r2d2.caf in Resources */,
 				3DABCEFF11D78F9C006348E6 /* Entitlements.plist in Resources */,
+				3D889F531213463E0067AD50 /* Incoming.wav in Resources */,
+				3D889F541213463E0067AD50 /* yoda.wav in Resources */,
+				3D889F551213463E0067AD50 /* dolfijn.wav in Resources */,
+				3D889F561213463E0067AD50 /* kikker.wav in Resources */,
+				3D889F571213463E0067AD50 /* tarzan.wav in Resources */,
+				3D889FC9121354D70067AD50 /* mail.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
