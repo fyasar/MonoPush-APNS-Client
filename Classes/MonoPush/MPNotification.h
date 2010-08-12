@@ -23,26 +23,25 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol MPNotificationDelegate;
 
 @interface MPNotification : NSObject {
 	NSString *_appKey;
 	NSString *_appSecret;
 	NSString *_deviceToken;
 	NSString *_deviceAlias;
-	NSString *_lastError;
 	BOOL isDeviceTokenReceived;
 	BOOL isDeviceTokenRegistered;
+	id <MPNotificationDelegate> delegate;
 }
 
 @property (nonatomic, retain) NSString *_appKey;
 @property (nonatomic, retain) NSString *_appSecret;
 @property (nonatomic, retain) NSString *_deviceToken;
 @property (nonatomic, retain) NSString *_deviceAlias;
-@property (nonatomic, retain) NSString *_lastError;
-
 @property (assign) BOOL isDeviceTokenReceived;
 @property (assign) BOOL isDeviceTokenRegistered;
-
+@property (nonatomic, assign) id <MPNotificationDelegate> delegate;
 
 - (void)RegisterDeviceWithToken:(NSData *)token;
 - (void)failedReceiveNotification:(NSError*)error;
@@ -53,3 +52,7 @@
 
 @end
 
+@protocol MPNotificationDelegate <NSObject>
+@optional
+- (void)MPCommunicationDidFinish:(int)statusCode responseText:(NSString *)statusText;
+@end

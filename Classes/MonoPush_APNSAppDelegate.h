@@ -27,7 +27,7 @@
 
 @class MonoPush_APNSViewController;
 
-@interface MonoPush_APNSAppDelegate : NSObject <UIApplicationDelegate> {
+@interface MonoPush_APNSAppDelegate : NSObject <UIApplicationDelegate, MPNotificationDelegate> {
     UIWindow *window;
     MonoPush_APNSViewController *defaultViewController;	
 	DiscountCouponController *discountCouponController; 
@@ -48,9 +48,8 @@
 @property (nonatomic, retain) DiscountCouponController *discountCouponController; 
 @property (nonatomic, retain) MovieController *movieController;
 
-- (void)startTimer;
-- (void)timerTick;
-- (void)OpenMovie;
+
+ - (void)OpenMovie;
 - (void)OpenDiscountCoupon;
 @end
 

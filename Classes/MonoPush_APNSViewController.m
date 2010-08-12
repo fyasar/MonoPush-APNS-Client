@@ -25,10 +25,13 @@
 #import "MPNotification.h"
 
 @implementation MonoPush_APNSViewController
-@synthesize infoDisplay, backgroundImageView, deviceToken;
-@synthesize defaultInformation, soundInformation;
-@synthesize deviceTokenRecievedLabel;
-@synthesize deviceTokenRegisteredLabel;
+
+@synthesize infoDisplay;
+@synthesize backgroundImageView;
+@synthesize defaultInformation;
+@synthesize soundInformation;
+@synthesize deviceTokenRecievedImage;
+@synthesize deviceTokenRegisteredImage;
 
 
 - (void)viewDidLoad {
@@ -58,12 +61,12 @@
 
 - (void)dealloc {
 	[backgroundImageView release];
-	[deviceToken release];
 	[infoDisplay release];
 	[defaultInformation release];
     [soundInformation release];
-    [deviceTokenRecievedLabel release];
-    [deviceTokenRegisteredLabel release];
+	
+    [deviceTokenRecievedImage release];
+    [deviceTokenRegisteredImage release];
 	[super dealloc];
 }
 
@@ -80,16 +83,20 @@
 {
 	if([MPNotification shared].isDeviceTokenReceived)
 	{
-		deviceTokenRecievedLabel.text = @"OK";
+		deviceTokenRecievedImage.image = [UIImage imageNamed:@"success.png"];
 		if([MPNotification shared].isDeviceTokenRegistered)
 		{
-			deviceTokenRegisteredLabel.text = @"OK";
-		}else {
-			deviceTokenRegisteredLabel.text = @"ERR";
+			deviceTokenRegisteredImage.image = [UIImage imageNamed:@"success.png"];
+		}
+		else
+		{
+			deviceTokenRegisteredImage.image = [UIImage imageNamed:@"error.png"];
 		}		
-	}else {
-		deviceTokenRecievedLabel.text = @"ERR";
-		deviceTokenRegisteredLabel.text = @"ERR";
+	}
+	else
+	{
+		deviceTokenRecievedImage.image = [UIImage imageNamed:@"error.png"];
+		deviceTokenRegisteredImage.image = [UIImage imageNamed:@"error.png"];
 	}
 }
 
@@ -100,7 +107,7 @@
 
 - (void)sendMeEmail
 {
-	if([MPNotification shared].isDeviceTokenReceived)
+	if(![MPNotification shared].isDeviceTokenReceived)
 	{
 		UIAlertView *notificationAlert = [[UIAlertView alloc] 
 										  initWithTitle:@"Warning" 
@@ -116,10 +123,10 @@
 	
 	[picker setSubject:@"About your device token"];
 		
-	NSString *emailBody = [NSString stringWithFormat:@"Hello,\n"
-						   "Your device token is :%@\n"
-						   "Thank you\n\n"
-						   "MonoPush Example Client", self.deviceToken];
+	NSString *emailBody = [NSString stringWithFormat:@"Hello,<br/>"
+						   "Your device token is <br/>%@<br/><br/>"
+						   "Thank you for using "
+						   "MonoPush Example Client", [MPNotification shared]._deviceToken];
 	
 	[picker setMessageBody:emailBody isHTML:YES];
 	

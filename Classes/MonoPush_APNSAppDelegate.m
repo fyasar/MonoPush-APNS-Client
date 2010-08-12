@@ -73,6 +73,7 @@
 	
 	//** MonoPush MainLibrary: Initialize MonoPush's Notification wrapper
 	[MPNotification Init:kApplicationKey appSecret:kApplicationSecret];
+	[[MPNotification shared] setDelegate:self];
 	
 	//Register this application for notifications
 	[[UIApplication sharedApplication] registerForRemoteNotificationTypes:(
@@ -91,7 +92,7 @@
 	
 	//** MonoPush MainLibrary: Register device to MonoPush server
 	[[MPNotification shared] RegisterDeviceWithToken:_deviceToken];
-	[self startTimer];
+	//[self startTimer];
 
 	NSString *token = [[MPNotification shared] _deviceToken];
 	NSString *tokenInfo = [NSString stringWithFormat:@"%@ device token received from Apple", token];
@@ -103,34 +104,16 @@
 	[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:tokenInfo];
 }
 
--(void)startTimer{	
-	timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(timerTick) userInfo:nil repeats:YES];
-	[[NSRunLoop mainRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
+- (void)MPCommunicationDidFinish:(int)statusCode responseText:(NSString *)statusText
+{
+	if(statusCode != 200 && statusCode != 201) {
+        [((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons];
+    }else {
+		if(![statusText isEqualToString:@""])
+			[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:statusText];
+		[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 						
+	}	
 }
-
--(void)timerTick{		
-	if(countdownSeconds == 0 )
-	{
-		[timer invalidate]; 
-	}
-	else
-	{
-		if(nil != [MPNotification shared]._lastError)
-		{
-			[timer invalidate];
-			[((MonoPush_APNSViewController *)[navigationController topViewController]).infoDisplay setText:[MPNotification shared]._lastError];
-			[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 						
-		}
-		
-		--countdownSeconds;
-		if([MPNotification shared].isDeviceTokenRegistered)
-		{
-			[((MonoPush_APNSViewController *)[navigationController topViewController]) updateStatusIcons]; 			
-		}
-	}
-}
-
-
 
 // When the remote notification failed app delegate will be fire this event
 - (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *) error {
