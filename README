@@ -1,4 +1,4 @@
-<h1>Monopush APNS Client</h1>
+Monopush APNS Client
 
 This program created for demonstrate to how to;
      - Connect to MonoPush push notification provider API via https.
@@ -6,7 +6,5 @@ This program created for demonstrate to how to;
      - Use MonoPush drop-in client library inside of your application. 
 
 Anyone, Who need to make changes of this app and library, according to their app. 
-It's free to use 
-
   
 
