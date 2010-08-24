@@ -31,8 +31,8 @@
 #import "MovieController.h"
 
 //Your Application key and application secret  
-#define kApplicationKey @"30d66e16-6d74-4e14-8314-9d9c018677ee"
-#define kApplicationSecret @"b8077179-3630-42f4-b191-edbf82d51d53"
+#define kApplicationKey @"<your app key>"
+#define kApplicationSecret @"<your app secret>"
 
 
 @implementation MonoPush_APNSAppDelegate
