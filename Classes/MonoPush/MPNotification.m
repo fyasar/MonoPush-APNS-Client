@@ -125,6 +125,7 @@ static MPNotification *_mpNotificationInstance;
 	[jsonObject setObject:deviceUuid forKey:@"udid"];
 	[jsonObject setObject:preferredLang forKey:@"preferedlanguage"];
 	[jsonObject setObject:deviceName forKey:@"devicename"];
+	[jsonObject setObject:deviceName forKey:@"alias"];
 	[jsonObject setObject:deviceModel forKey:@"devicemodel"];
 	[jsonObject setObject:deviceSystemVersion forKey:@"systemver"];
 	[jsonObject setObject:deviceSystemName forKey:@"systemos"];
@@ -132,7 +133,7 @@ static MPNotification *_mpNotificationInstance;
 	NSString *jsonPayloadString = [jsonObject JSONRepresentation];
 	NSLog(@"json payload : %@", jsonPayloadString );
 	
-	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"http://app.monopush.com/api/device/register/%@", self._deviceToken]];
+	NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://app.monopush.com/api/device/register/%@", self._deviceToken]];
 	ASIHTTPRequest *request = [ASIHTTPRequest requestWithURL:url];
 	
 	
